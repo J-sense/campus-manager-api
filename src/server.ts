@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
-import app from "./app";
-import config from "./config";
-const port = 5000;
+import mongoose from 'mongoose';
+import app from './app';
+import config from './config';
+
 main().catch((err) => console.log(err));
 
 async function main() {
