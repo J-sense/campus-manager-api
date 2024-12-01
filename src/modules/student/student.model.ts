@@ -80,12 +80,16 @@ const studentSchema = new Schema<TStudent>(
       required: [true, 'ID is required'],
       unique: true,
     },
-    // user: {
-    //   type: Schema.Types.ObjectId,
-    //   required: [true, 'User id is required'],
-    //   unique: true,
-    //   ref: 'User',
-    // },
+    password: {
+      type: String,
+      required: true,
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      required: [true, 'User id is required'],
+      unique: true,
+      ref: 'User',
+    },
     name: {
       type: userNameSchema,
       required: [true, 'Name is required'],
@@ -138,11 +142,11 @@ const studentSchema = new Schema<TStudent>(
       default: false,
     },
   },
-  //   {
-  //     toJSON: {
-  //       virtuals: true,
-  //     },
-  //   },
+  {
+    toJSON: {
+      virtuals: true,
+    },
+  },
 );
 
 export const StudentModel = model<TStudent>('Student', studentSchema);

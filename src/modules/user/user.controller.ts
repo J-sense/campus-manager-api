@@ -1,19 +1,23 @@
 import { Request, Response } from 'express';
-import { userService } from './user.service';
+import { UserServices } from './user.service';
 
-const creteStudent = async (req: Request, res: Response) => {
+const createUser = async (req: Request, res: Response) => {
   try {
-    const studentData = req.body;
-    const result = await userService.createStudentIntoDb(studentData);
+    const { password, student: studentData } = req.body;
+    const result = await UserServices.createStudentIntoDB(
+      password,
+      studentData,
+    );
     res.status(200).json({
+      message: 'student created successfully',
       success: true,
-      message: 'Student Create Successfully',
       data: result,
     });
+    // const zodParsedData = studentValidationSchema.parse(studentData);
   } catch (error) {
     console.log(error);
   }
 };
 export const userController = {
-  creteStudent,
+  createUser,
 };

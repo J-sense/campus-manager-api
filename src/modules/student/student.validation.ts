@@ -11,6 +11,7 @@ const userNameSchema = z.object({
   middleName: z.string(),
   lastName: z.string(),
 });
+
 const guardianSchema = z.object({
   fatherName: z.string(),
   fatherOccupation: z.string(),
@@ -26,16 +27,17 @@ const localGuardianSchema = z.object({
   contactNo: z.string(),
   address: z.string(),
 });
-export const studentSchemaValidation = z.object({
+
+export const studentValidationSchema = z.object({
   id: z.string(),
-  password: z.string(),
+  password: z.string().max(20),
   name: userNameSchema,
   gender: z.enum(['male', 'female', 'other']),
   dateOfBirth: z.string(),
   email: z.string().email(),
   contactNo: z.string(),
   emergencyContactNo: z.string(),
-  bloodGroup: z.enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']),
+  bloogGroup: z.enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']),
   presentAddress: z.string(),
   permanentAddress: z.string(),
   guardian: guardianSchema,
@@ -44,3 +46,5 @@ export const studentSchemaValidation = z.object({
   isActive: z.enum(['active', 'blocked']).default('active'),
   isDeleted: z.boolean().optional(),
 });
+
+export default studentValidationSchema;
