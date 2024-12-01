@@ -42,7 +42,7 @@ userSchema.pre('save', async function (next) {
   user.password = await bcrypt.hash(user.password, Number(config.bcrypt_salt));
   next();
 });
-userSchema.post('save', async function (doc, next) {
+userSchema.post('save', function (doc, next) {
   doc.password = '';
   next();
 });

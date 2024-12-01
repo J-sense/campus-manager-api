@@ -4,6 +4,8 @@ import cors from 'cors';
 import { studentRoutes } from './modules/student/student.routes';
 import { userRoutes } from './modules/user/user.routes';
 
+import notfound from './middleware/notfound';
+
 app.use(express.json());
 app.use(cors());
 
@@ -23,4 +25,5 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   });
   next();
 });
+app.use(notfound);
 export default app;
