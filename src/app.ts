@@ -1,4 +1,4 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application, Request, Response, NextFunction } from 'express';
 const app: Application = express();
 import cors from 'cors';
 import { studentRoutes } from './modules/student/student.routes';
@@ -12,5 +12,15 @@ app.use('/api/v1/users', userRoutes);
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!');
 });
-
+// eslint-disable-next-line no-undef, @typescript-eslint/no-explicit-any
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  const statuseCode = 500;
+  const message = err.message || 'something error wrong';
+  res.status(statuseCode).json({
+    success: false,
+    message,
+    error: err,
+  });
+  next();
+});
 export default app;

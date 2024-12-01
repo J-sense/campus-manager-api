@@ -15,4 +15,15 @@ app.use('/api/v1/users', user_routes_1.userRoutes);
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
+// eslint-disable-next-line no-undef, @typescript-eslint/no-explicit-any
+app.use((err, req, res, next) => {
+    const statuseCode = 500;
+    const message = err.message || 'something error wrong';
+    res.status(statuseCode).json({
+        success: false,
+        message,
+        error: err,
+    });
+    next();
+});
 exports.default = app;
