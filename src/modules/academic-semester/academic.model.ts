@@ -13,7 +13,7 @@ const academicSchema = new Schema<acadeicSemester>({
     required: true,
   },
   year: {
-    type: Date,
+    type: String,
     required: true,
   },
   startmonth: {

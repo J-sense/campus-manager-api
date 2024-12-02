@@ -15,7 +15,7 @@ type Month =
 export type acadeicSemester = {
   name: 'Autumn' | 'Summer' | 'Fall';
   code: '01' | '02' | '03';
-  year: Date;
+  year: string;
   startmonth: Month;
   endMonth: Month;
 };
