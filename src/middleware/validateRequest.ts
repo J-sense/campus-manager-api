@@ -6,6 +6,7 @@ const validateMiddleware = (schema: AnyZodObject) => {
       await schema.parseAsync({
         body: req.body,
       });
+      next();
     } catch (error) {
       next(error);
     }

@@ -1,4 +1,4 @@
-import { NextFunction, Request, RequestHandler, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { UserServices } from './user.service';
 
 // const catchAsync = (fn: RequestParamHandler) => {
@@ -6,11 +6,7 @@ import { UserServices } from './user.service';
 //     Promise.resolve(fn(req, res, next)).catch((err) => next(err));
 //   };
 // };
-const createUser: RequestHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+const createUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { password, student: studentData } = req.body;
     const result = await UserServices.createStudentIntoDB(
