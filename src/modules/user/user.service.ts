@@ -23,7 +23,7 @@ const createStudentIntoDB = async (password: string, studentData: TStudent) => {
     throw new Error('not found');
   }
   //set manually generated it
-  userData.id = generatedId(admissionSemester);
+  userData.id = await generatedId(admissionSemester);
 
   // create a user
   const newUser = await User.create(userData);
