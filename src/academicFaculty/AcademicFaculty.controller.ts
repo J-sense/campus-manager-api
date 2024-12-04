@@ -63,7 +63,7 @@ const updateAcademicFaculty = async (
       req.body,
     );
     res.status(200).json({
-      message: 'Get single Academic Faculty Successfully',
+      message: ' Academic Faculty is updated Successfully',
       success: true,
       data: result,
     });
