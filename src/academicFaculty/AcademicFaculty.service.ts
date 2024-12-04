@@ -19,8 +19,9 @@ const updateAcademicFaculty = async (id: string, payload: TAcademicFaculty) => {
   });
   return result;
 };
-export const academicServices = {
+export const academicFacultyServices = {
   createAcademicFacultyIntoDB,
   getAllAcademicFaculty,
   getSingleAcademicFaculty,
+  updateAcademicFaculty,
 };
