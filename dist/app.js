@@ -10,13 +10,15 @@ const student_routes_1 = require("./modules/student/student.routes");
 const user_routes_1 = require("./modules/user/user.routes");
 const notfound_1 = __importDefault(require("./middleware/notfound"));
 const academic_routes_1 = require("./modules/academic-semester/academic.routes");
-const AcademicFaculty_routes_1 = require("./academicFaculty/AcademicFaculty.routes");
+const AcademicFaculty_routes_1 = require("./modules/academicFaculty/AcademicFaculty.routes");
+const academicDepartment_routes_1 = require("./modules/academic-department/academicDepartment.routes");
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 app.use('/api/v1/students', student_routes_1.studentRoutes);
 app.use('/api/v1/users', user_routes_1.userRoutes);
 app.use('/api/v1/academic-semester', academic_routes_1.AcademicSemesterRoutes);
 app.use('/api/v1/academic-faculties', AcademicFaculty_routes_1.academicFacultyRoutes);
+app.use('/api/v1/academic-department', academicDepartment_routes_1.academicDepatmentRoutes);
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
