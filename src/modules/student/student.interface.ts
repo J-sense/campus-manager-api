@@ -35,6 +35,7 @@ export type TStudent = {
   bloogGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
   presentAddress: string;
   admissionSemester: Types.ObjectId;
+  academicDepartment: Types.ObjectId;
   permanentAddress: string;
   guardian: TGuardian;
   localGuardian: TLocalGuardian;

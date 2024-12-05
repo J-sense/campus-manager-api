@@ -32,7 +32,7 @@ export const generatedId = async (payload: acadeicSemester) => {
   ) {
     currentId = lastStudentId.substring(6);
   } else {
-    throw new Error('Not found');
+    throw new Error('id  is Not found');
   }
 
   let incrementId = (Number(currentId) + 1).toString().padStart(4, '0');
