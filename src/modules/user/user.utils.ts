@@ -1,7 +1,9 @@
+// year semesterCode 4digit number
+
 import { acadeicSemester } from '../academic-semester/academic.interface';
 import { User } from './user.model';
 
-const findLastOne = async () => {
+const findLastStudentId = async () => {
   const lastStudent = await User.findOne(
     {
       role: 'student',
@@ -15,27 +17,34 @@ const findLastOne = async () => {
       createdAt: -1,
     })
     .lean();
+
+  //2030 01 0001
   return lastStudent?.id ? lastStudent.id : undefined;
 };
-export const generatedId = async (payload: acadeicSemester) => {
-  const lastStudentId = await findLastOne();
+
+export const generateStudentId = async (payload: acadeicSemester) => {
+  // first time 0000
+  //0001  => 1
+  let currentId = (0).toString(); // 0000 by deafult
+
+  const lastStudentId = await findLastStudentId();
+  // 2030 01 0001
   const lastStudentSemesterCode = lastStudentId?.substring(4, 6); //01;
   const lastStudentYear = lastStudentId?.substring(0, 4); // 2030
   const currentSemesterCode = payload.code;
   const currentYear = payload.year;
 
-  let currentId = (0).toString();
   if (
     lastStudentId &&
     lastStudentSemesterCode === currentSemesterCode &&
     lastStudentYear === currentYear
   ) {
-    currentId = lastStudentId.substring(6);
-  } else {
-    throw new Error('id  is Not found');
+    currentId = lastStudentId.substring(6); // 00001
   }
 
   let incrementId = (Number(currentId) + 1).toString().padStart(4, '0');
+
   incrementId = `${payload.year}${payload.code}${incrementId}`;
+
   return incrementId;
 };
