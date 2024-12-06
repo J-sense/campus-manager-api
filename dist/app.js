@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 });
 // eslint-disable-next-line no-undef, @typescript-eslint/no-explicit-any
 app.use((err, req, res, next) => {
-    const statuseCode = 500;
+    const statuseCode = err.statusCode || 500;
     const message = err.message || 'something error wrong';
     res.status(statuseCode).json({
         success: false,

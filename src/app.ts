@@ -22,7 +22,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 // eslint-disable-next-line no-undef, @typescript-eslint/no-explicit-any
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  const statuseCode = 500;
+  const statuseCode = err.statusCode || 500;
   const message = err.message || 'something error wrong';
   res.status(statuseCode).json({
     success: false,

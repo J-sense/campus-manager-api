@@ -35,7 +35,26 @@ const findAllStudent = async (
     next(error);
   }
 };
+const deleteStudent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const result = await studentService.deleteStudentFromDB(
+      req.params.studentId,
+    );
+    res.status(200).json({
+      message: 'Student Deleted Successfully',
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 export const studentController = {
   createStudent,
   findAllStudent,
+  deleteStudent,
 };
