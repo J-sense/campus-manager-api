@@ -14,6 +14,9 @@ const findAllStudentFromDb = async (query: Record<string, unknown>) => {
   if (query?.searchTerm) {
     searchTerm = query?.searchTerm as string;
   }
+  if (searchTerm === query.searchTerm) {
+    throw new Error('can not find the item');
+  }
   const result = await StudentModel.find({
     $or: ['email', 'name.firstName', 'guardian.firstName'].map((field) => ({
       [field]: { $regex: searchTerm, $options: 'i' },
