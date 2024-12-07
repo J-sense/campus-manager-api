@@ -8,8 +8,17 @@ const createStudentOnDb = async (studentData: TStudent) => {
   const result = await StudentModel.create(studentData);
   return result;
 };
-const findAllStudentFromDb = async () => {
-  const result = await StudentModel.find()
+const findAllStudentFromDb = async (query: Record<string, unknown>) => {
+  let searchTerm = '';
+  // {email: {$regex:searchTerm,$options:"i"}}
+  if (query?.searchTerm) {
+    searchTerm = query?.searchTerm as string;
+  }
+  const result = await StudentModel.find({
+    $or: ['email', 'name.firstName', 'guardian.firstName'].map((field) => ({
+      [field]: { $regex: searchTerm, $options: 'i' },
+    })),
+  })
     .populate('admissionSemester')
     .populate({
       path: 'academicDepartment',
@@ -53,11 +62,19 @@ const deleteStudentFromDB = async (id: string) => {
     await session.abortTransaction();
     await session.endSession();
     throw new Error('Failed to delete student');
+    console.log(err);
   }
 };
-
+const getsingleStudent = async (id: string) => {
+  const result = await StudentModel.findOne({ id });
+  if (!result) {
+    throw new AppError(404, 'Student Not exists');
+  }
+  return result;
+};
 export const studentService = {
   createStudentOnDb,
   findAllStudentFromDb,
   deleteStudentFromDB,
+  getsingleStudent,
 };

@@ -26,10 +26,16 @@ app.get('/', (req, res) => {
 app.use((err, req, res, next) => {
     const statuseCode = err.statusCode || 500;
     const message = err.message || 'something error wrong';
+    const errorSources = [
+        {
+            path: '',
+            message: 'Something went wrong',
+        },
+    ];
     res.status(statuseCode).json({
         success: false,
         message,
-        error: err,
+        errorSources,
     });
     next();
 });

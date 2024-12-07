@@ -24,10 +24,20 @@ app.get('/', (req: Request, res: Response) => {
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   const statuseCode = err.statusCode || 500;
   const message = err.message || 'something error wrong';
+  type TerrorSources = {
+    path: string | number;
+    message: string;
+  }[];
+  const errorSources: TerrorSources = [
+    {
+      path: '',
+      message: 'Something went wrong',
+    },
+  ];
   res.status(statuseCode).json({
     success: false,
     message,
-    error: err,
+    errorSources,
   });
   next();
 });
