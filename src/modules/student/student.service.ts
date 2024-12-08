@@ -9,19 +9,31 @@ const createStudentOnDb = async (studentData: TStudent) => {
   return result;
 };
 const findAllStudentFromDb = async (query: Record<string, unknown>) => {
-  let searchTerm = '';
+  console.log(query);
+
   // {email: {$regex:searchTerm,$options:"i"}}
+  const queryObj = { ...query };
+  let searchTerm = '';
   if (query?.searchTerm) {
     searchTerm = query?.searchTerm as string;
   }
-  if (searchTerm === query.searchTerm) {
-    throw new Error('can not find the item');
-  }
-  const result = await StudentModel.find({
+
+  const searchQuery = StudentModel.find({
     $or: ['email', 'name.firstName', 'guardian.firstName'].map((field) => ({
       [field]: { $regex: searchTerm, $options: 'i' },
     })),
-  })
+  });
+  const excludeFields = ['searchTerm'];
+  excludeFields.forEach((el) => delete queryObj[el]);
+
+  // const searchQuery = StudentModel.find({
+  //   $or: ['email', 'name.firstName', 'guardian.firstName'].map((field) => ({
+  //     [field]: { $regex: searchTerm, $options: 'i' },
+  //   })),
+  // });
+  console.log(queryObj);
+  const result = await searchQuery
+    .find(queryObj)
     .populate('admissionSemester')
     .populate({
       path: 'academicDepartment',
