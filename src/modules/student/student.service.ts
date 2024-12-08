@@ -60,7 +60,17 @@ const findAllStudentFromDb = async (query: Record<string, unknown>) => {
   // const PageQuery = sortQuery.skip(skip);
   // const limitQuery = await PageQuery.limit(limit);
   // return limitQuery;
-  const studentQuery = new QueryBuilder(StudentModel.find(), query)
+  const studentQuery = new QueryBuilder(
+    StudentModel.find()
+      .populate('admissionSemester')
+      .populate({
+        path: 'academicDepartment',
+        populate: {
+          path: 'academicFaculty',
+        },
+      }),
+    query,
+  )
     .search(searchFileds)
     .filter()
     .sort()
