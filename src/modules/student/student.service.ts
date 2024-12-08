@@ -32,7 +32,7 @@ const findAllStudentFromDb = async (query: Record<string, unknown>) => {
   //   })),
   // });
   console.log(queryObj);
-  const result = await searchQuery
+  const filterQuery = searchQuery
     .find(queryObj)
     .populate('admissionSemester')
     .populate({
@@ -41,7 +41,13 @@ const findAllStudentFromDb = async (query: Record<string, unknown>) => {
         path: 'academicFaculty',
       },
     });
-  return result;
+
+  let sort = '-createdAt';
+  if (query.sort) {
+    sort = query.sort as string;
+  }
+  const sortQuery = await filterQuery.sort(sort);
+  return sortQuery;
 };
 const deleteStudentFromDB = async (id: string) => {
   const session = await mongoose.startSession();
