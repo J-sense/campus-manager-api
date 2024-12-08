@@ -23,7 +23,7 @@ const findAllStudentFromDb = async (query: Record<string, unknown>) => {
       [field]: { $regex: searchTerm, $options: 'i' },
     })),
   });
-  const excludeFields = ['searchTerm'];
+  const excludeFields = ['searchTerm', 'sort', 'page', 'limit', 'skip'];
   excludeFields.forEach((el) => delete queryObj[el]);
 
   // const searchQuery = StudentModel.find({
@@ -46,8 +46,19 @@ const findAllStudentFromDb = async (query: Record<string, unknown>) => {
   if (query.sort) {
     sort = query.sort as string;
   }
-  const sortQuery = await filterQuery.sort(sort);
-  return sortQuery;
+  const sortQuery = filterQuery.sort(sort);
+  let limit = 1;
+  const page = 1;
+  let skip = 0;
+  if (query.limit) {
+    limit = Number(query.limit);
+  }
+  if (query.page) {
+    skip = Number(page - 1) * skip;
+  }
+  const PageQuery = sortQuery.skip(skip);
+  const limitQuery = await PageQuery.limit(limit);
+  return limitQuery;
 };
 const deleteStudentFromDB = async (id: string) => {
   const session = await mongoose.startSession();
