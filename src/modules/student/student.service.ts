@@ -17,9 +17,9 @@ const findAllStudentFromDb = async (query: Record<string, unknown>) => {
   if (query?.searchTerm) {
     searchTerm = query?.searchTerm as string;
   }
-
+  const searchFileds = ['email', 'name.firstName', 'guardian.firstName'];
   const searchQuery = StudentModel.find({
-    $or: ['email', 'name.firstName', 'guardian.firstName'].map((field) => ({
+    $or: searchFileds.map((field) => ({
       [field]: { $regex: searchTerm, $options: 'i' },
     })),
   });
