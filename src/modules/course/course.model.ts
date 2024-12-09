@@ -49,4 +49,4 @@ const courseSchema = new Schema<TCourse>(
   },
 );
 
-export const course = model('Course', courseSchema);
+export const Course = model('Course', courseSchema);
