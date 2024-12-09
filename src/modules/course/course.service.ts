@@ -46,7 +46,24 @@ const updatedcoursIntoDb = async (id: string, payload: Partial<TCourse>) => {
       runValidators: true,
     },
   );
-  return updateBasicCourseInfo;
+  if (preRequisiteCourses && preRequisiteCourses.length > 0) {
+    const deletePreRequisite = preRequisiteCourses
+      .filter((el) => el.course && el.isDeleted)
+      .map((el) => el.course);
+    const deletedPreRequisiteCourse = await Course.findByIdAndUpdate(id, {
+      $pull: { preRequisiteCourses: { course: { $in: deletePreRequisite } } },
+    });
+    const newPreRequisit = preRequisiteCourses.filter(
+      (er) => er.course && !er.isDeleted,
+    );
+    const newPreRequisitCourse = await Course.findByIdAndUpdate(id, {
+      $addToSet: { preRequisiteCourses: { $each: newPreRequisit } },
+    });
+  }
+  const result = await Course.findById(id).populate(
+    'preRequisiteCourses.course',
+  );
+  return result;
 };
 export const courseService = {
   createCourseIntoDb,
