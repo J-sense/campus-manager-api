@@ -23,6 +23,7 @@ const deleteCourseFromDb = async (id: string) => {
       new: true,
     },
   );
+  return result;
 };
 export const courseService = {
   createCourseIntoDb,
