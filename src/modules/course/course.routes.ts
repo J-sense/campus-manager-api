@@ -13,3 +13,8 @@ export const courseRoutes = router;
 router.get('/', courseController.getAllCourse);
 router.get('/:id', courseController.getSingleCourse);
 router.delete('/:id', courseController.deleteCourse);
+router.patch(
+  '/:id',
+  validateMiddleware(courserValidation.updatedCourseValidationSchema),
+  courseController.updatedCourse,
+);

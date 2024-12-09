@@ -66,9 +66,29 @@ const deleteCourse = async (
     next(error);
   }
 };
+const updatedCourse = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const result = await courseService.updatedcoursIntoDb(
+      req.params.id,
+      req.body,
+    );
+    res.status(200).json({
+      message: 'Course updated SuccessFully',
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 export const courseController = {
   createCourse,
   getAllCourse,
   getSingleCourse,
   deleteCourse,
+  updatedCourse,
 };
