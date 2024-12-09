@@ -24,7 +24,7 @@ const getAllCourse = async (
   next: NextFunction,
 ) => {
   try {
-    const result = await courseService.getAllFromDb();
+    const result = await courseService.getAllFromDb(req.query);
     res.status(200).json({
       message: 'Get all course successfully',
       success: true,

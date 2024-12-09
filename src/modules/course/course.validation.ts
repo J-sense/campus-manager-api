@@ -15,3 +15,6 @@ const createCourseValidationSchema = z.object({
     isDeleted: z.boolean().optional(),
   }),
 });
+export const courserValidation = {
+  createCourseValidationSchema,
+};

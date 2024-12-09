@@ -8,6 +8,7 @@ import notfound from './middleware/notfound';
 import { AcademicSemesterRoutes } from './modules/academic-semester/academic.routes';
 import { academicFacultyRoutes } from './modules/academicFaculty/AcademicFaculty.routes';
 import { academicDepatmentRoutes } from './modules/academic-department/academicDepartment.routes';
+import { courseRoutes } from './modules/course/course.routes';
 
 app.use(express.json());
 app.use(cors());
@@ -17,6 +18,7 @@ app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/academic-semester', AcademicSemesterRoutes);
 app.use('/api/v1/academic-faculties', academicFacultyRoutes);
 app.use('/api/v1/academic-department', academicDepatmentRoutes);
+app.use('/api/v1/course', courseRoutes);
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!');
 });
