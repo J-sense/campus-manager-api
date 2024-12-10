@@ -85,10 +85,32 @@ const updatedCourse = async (
     next(error);
   }
 };
+const assignFacultis = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { courseId } = req.params;
+    const { faculties } = req.body;
+    const result = await courseService.assignFacultiesWithCourseIntoDB(
+      courseId,
+      faculties,
+    );
+    res.status(200).json({
+      message: 'successfully',
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 export const courseController = {
   createCourse,
   getAllCourse,
   getSingleCourse,
   deleteCourse,
   updatedCourse,
+  assignFacultis,
 };

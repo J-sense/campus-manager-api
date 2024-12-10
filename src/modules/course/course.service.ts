@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { QueryBuilder } from '../../Builder/QueryBuilder';
 import { courseSearchableFields } from './course.constrant';
-import { TCourse } from './course.interface';
-import { Course } from './course.model';
+import { TCourse, TCoursefaculty } from './course.interface';
+import { Course, CourseFaculty } from './course.model';
 
 const createCourseIntoDb = async (payload: TCourse) => {
   const result = await Course.create(payload);
@@ -67,10 +67,28 @@ const updatedcoursIntoDb = async (id: string, payload: Partial<TCourse>) => {
   );
   return result;
 };
+const assignFacultiesWithCourseIntoDB = async (
+  id: string,
+  payload: Partial<TCoursefaculty>,
+) => {
+  const result = await CourseFaculty.findByIdAndUpdate(
+    id,
+    {
+      course: id,
+      $addToSet: { faculties: { $each: payload } },
+    },
+    {
+      upsert: true,
+      new: true,
+    },
+  );
+  return result;
+};
 export const courseService = {
   createCourseIntoDb,
   getAllFromDb,
   getSingleFromDb,
   deleteCourseFromDb,
   updatedcoursIntoDb,
+  assignFacultiesWithCourseIntoDB,
 };

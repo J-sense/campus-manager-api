@@ -9,7 +9,6 @@ router.post(
   validateMiddleware(courserValidation.createCourseValidationSchema),
   courseController.createCourse,
 );
-export const courseRoutes = router;
 router.get('/', courseController.getAllCourse);
 router.get('/:id', courseController.getSingleCourse);
 router.delete('/:id', courseController.deleteCourse);
@@ -18,3 +17,5 @@ router.patch(
   validateMiddleware(courserValidation.updatedCourseValidationSchema),
   courseController.updatedCourse,
 );
+router.put('/:courseId/assign-faculties', courseController.assignFacultis);
+export const courseRoutes = router;
