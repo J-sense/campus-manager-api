@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { QueryBuilder } from '../../Builder/QueryBuilder';
 import { courseSearchableFields } from './course.constrant';
 import { TCourse } from './course.interface';
@@ -38,6 +39,7 @@ const deleteCourseFromDb = async (id: string) => {
 };
 const updatedcoursIntoDb = async (id: string, payload: Partial<TCourse>) => {
   const { preRequisiteCourses, ...remainingCourseData } = payload;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const updateBasicCourseInfo = await Course.findByIdAndUpdate(
     id,
     remainingCourseData,
