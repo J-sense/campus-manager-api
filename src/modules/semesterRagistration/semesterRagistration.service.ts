@@ -31,7 +31,13 @@ const getAllSemester = async (query: Record<string, unknown>) => {
   const result = await semesterRegistrationQuery.modelQuery;
   return result;
 };
+const getSingleSemester = async (id: string) => {
+  const result = await SemesterRegistration.findById(id);
+  return result;
+};
+
 export const semesterRegistrationSErvice = {
   createSemester,
   getAllSemester,
+  getSingleSemester,
 };

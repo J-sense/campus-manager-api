@@ -34,7 +34,26 @@ const getallSemesterRegistration = async (
     next(error);
   }
 };
+const getSingleSemesterRegistration = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const result = await semesterRegistrationSErvice.getSingleSemester(
+      req.params.id,
+    );
+    res.status(200).json({
+      message: 'Get single Semester Registration retrieved successfully',
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 export const semesterRegistrationController = {
   createSemesterRegistration,
   getallSemesterRegistration,
+  getSingleSemesterRegistration,
 };
