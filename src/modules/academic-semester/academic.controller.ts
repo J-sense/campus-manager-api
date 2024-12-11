@@ -19,6 +19,22 @@ const academicSemesterCreate = async (
     next(error);
   }
 };
+const getallacademicSemester = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const result = await academicSemesterServices.getallAcademicSemester();
+    res.status(200).json({
+      message: 'Successfully rettrive all Academic semester',
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 const singelAcademicSemester = async (
   req: Request,
@@ -41,4 +57,5 @@ const singelAcademicSemester = async (
 export const acadeicSemesterController = {
   academicSemesterCreate,
   singelAcademicSemester,
+  getallacademicSemester,
 };
