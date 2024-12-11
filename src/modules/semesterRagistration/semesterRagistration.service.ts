@@ -1,3 +1,4 @@
+import { QueryBuilder } from '../../Builder/QueryBuilder';
 import AppError from '../../errors/AppError';
 import { academicModel } from '../academic-semester/academic.model';
 import { TSemesterRagistration } from './semesterRagistration.interface';
@@ -18,7 +19,19 @@ const createSemester = async (payload: TSemesterRagistration) => {
   const result = await SemesterRegistration.create(payload);
   return result;
 };
-
+const getAllSemester = async (query: Record<string, unknown>) => {
+  const semesterRegistrationQuery = await new QueryBuilder(
+    SemesterRegistration.find().populate('academicSemester'),
+    query,
+  )
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+  const result = await semesterRegistrationQuery.modelQuery;
+  return result;
+};
 export const semesterRegistrationSErvice = {
   createSemester,
+  getAllSemester,
 };

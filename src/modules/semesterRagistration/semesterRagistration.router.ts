@@ -11,5 +11,6 @@ router.post(
   ),
   semesterRegistrationController.createSemesterRegistration,
 );
+router.get('/', semesterRegistrationController.getallSemesterRegistration);
 
 export const semesterRegistrationRoutes = router;

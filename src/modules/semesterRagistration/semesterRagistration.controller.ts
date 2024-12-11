@@ -17,6 +17,24 @@ const createSemesterRegistration = async (
     next(error);
   }
 };
+
+const getallSemesterRegistration = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const result = await semesterRegistrationSErvice.getAllSemester(req.query);
+    res.status(200).json({
+      message: 'Semester Registration retrived successfully',
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 export const semesterRegistrationController = {
   createSemesterRegistration,
+  getallSemesterRegistration,
 };
