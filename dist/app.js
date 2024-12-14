@@ -14,8 +14,11 @@ const AcademicFaculty_routes_1 = require("./modules/academicFaculty/AcademicFacu
 const academicDepartment_routes_1 = require("./modules/academic-department/academicDepartment.routes");
 const course_routes_1 = require("./modules/course/course.routes");
 const semesterRagistration_router_1 = require("./modules/semesterRagistration/semesterRagistration.router");
+const offeredCourse_router_1 = require("./modules/offeredCourse/offeredCourse.router");
+const auth_routes_1 = require("./modules/Auth/auth.routes");
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
+app.use('/api/v1/auth', auth_routes_1.authRoutes);
 app.use('/api/v1/students', student_routes_1.studentRoutes);
 app.use('/api/v1/users', user_routes_1.userRoutes);
 app.use('/api/v1/academic-semester', academic_routes_1.AcademicSemesterRoutes);
@@ -23,6 +26,7 @@ app.use('/api/v1/academic-faculties', AcademicFaculty_routes_1.academicFacultyRo
 app.use('/api/v1/academic-department', academicDepartment_routes_1.academicDepatmentRoutes);
 app.use('/api/v1/semester-registration', semesterRagistration_router_1.semesterRegistrationRoutes);
 app.use('/api/v1/course', course_routes_1.courseRoutes);
+app.use('/api/v1/offeredCourse', offeredCourse_router_1.OfferedCourseRoutes);
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
