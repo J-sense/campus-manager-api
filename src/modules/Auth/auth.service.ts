@@ -22,7 +22,7 @@ const createLoginIntoDb = async (payload: TLogin) => {
     isUserExist.password,
   );
   const JwtPayload = {
-    userId: isUserExist,
+    userId: isUserExist.id,
     role: isUserExist.role,
   };
   const accessToken = jwt.sign(JwtPayload, config.jwt_access_secret as string, {
