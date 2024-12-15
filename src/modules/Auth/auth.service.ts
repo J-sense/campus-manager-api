@@ -1,7 +1,7 @@
 import AppError from '../../errors/AppError';
 import { User } from '../user/user.model';
 import { TLogin } from './auth.interface';
-
+import bcrypt from 'bcrypt';
 const createLoginIntoDb = async (payload: TLogin) => {
   const isUserExist = await User.findOne({ id: payload.id });
   if (!isUserExist) {
@@ -15,6 +15,11 @@ const createLoginIntoDb = async (payload: TLogin) => {
   if (userStatus === 'blocked') {
     throw new AppError(404, 'This user is blocked');
   }
+  const isPasswordMatch = bcrypt.compare(
+    payload?.password,
+    isUserExist.password,
+  );
+  console.log(isPasswordMatch);
 };
 export const authService = {
   createLoginIntoDb,
