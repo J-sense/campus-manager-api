@@ -1,4 +1,3 @@
-import { path } from 'path';
 // /* eslint-disable @typescript-eslint/no-explicit-any */
 // import { Request, Response, NextFunction } from 'express';
 // import mongoose from 'mongoose';
@@ -6,6 +5,7 @@ import { path } from 'path';
 import { NextFunction, Request, Response } from 'express';
 import { ZodError, ZodIssue } from 'zod';
 import { TErrorSource } from '../interface/error';
+import config from '../config';
 
 // type TerrorRespons = {
 //   message: string;
@@ -61,6 +61,7 @@ type Terr = {
   success: boolean;
   message: string | number;
   errorSource: TErrorSource;
+  stack: string;
 };
 const globalErrorhandler = (
   err: Terr,
@@ -101,6 +102,7 @@ const globalErrorhandler = (
     success: false,
     message: message,
     errorSource,
+    stack: config.development === 'development' ? err?.stack : null,
   });
   next();
 };
