@@ -25,6 +25,7 @@ const findAllStudent = async (
   next: NextFunction,
 ) => {
   try {
+    console.log(`${req.user} text`);
     const result = await studentService.findAllStudentFromDb(req.query);
     res.status(200).json({
       message: 'Successfully get all the student',
