@@ -16,6 +16,7 @@ const course_routes_1 = require("./modules/course/course.routes");
 const semesterRagistration_router_1 = require("./modules/semesterRagistration/semesterRagistration.router");
 const offeredCourse_router_1 = require("./modules/offeredCourse/offeredCourse.router");
 const auth_routes_1 = require("./modules/Auth/auth.routes");
+const globalErrorhandles_1 = __importDefault(require("./middleware/globalErrorhandles"));
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 app.use('/api/v1/auth', auth_routes_1.authRoutes);
@@ -30,23 +31,31 @@ app.use('/api/v1/offeredCourse', offeredCourse_router_1.OfferedCourseRoutes);
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
-// eslint-disable-next-line no-undef, @typescript-eslint/no-explicit-any
-app.use((err, req, res, next) => {
-    const statuseCode = err.statusCode || 500;
-    const message = err.message || 'something error wrong';
-    const errorSource = [
-        {
-            path: '',
-            message: 'something went wrong',
-        },
-    ];
-    res.status(statuseCode).json({
-        success: false,
-        message,
-        errorSource,
-        error: err,
-    });
-    next();
-});
+// app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+//   let statuseCode = err.statusCode || 500;
+//   let message = err.message || 'something error wrong';
+//   type TerrorSources = {
+//     path: string | number;
+//     message: string;
+//   }[];
+//   const errorSource: TerrorSources = [
+//     {
+//       path: '',
+//       message: 'something went wrong',
+//     },
+//   ];
+//   if (err instanceof ZodError) {
+//     statuseCode = 400;
+//     message = 'Something went wrong';
+//   }
+//   res.status(statuseCode).json({
+//     success: false,
+//     message,
+//     errorSource,
+//     error: err,
+//   });
+//   next();
+// });
+app.use(globalErrorhandles_1.default);
 app.use(notfound_1.default);
 exports.default = app;

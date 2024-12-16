@@ -1,4 +1,4 @@
-import express, { Application, Request, Response, NextFunction } from 'express';
+import express, { Application, Request, Response } from 'express';
 const app: Application = express();
 import cors from 'cors';
 import { studentRoutes } from './modules/student/student.routes';
@@ -12,6 +12,8 @@ import { courseRoutes } from './modules/course/course.routes';
 import { semesterRegistrationRoutes } from './modules/semesterRagistration/semesterRagistration.router';
 import { OfferedCourseRoutes } from './modules/offeredCourse/offeredCourse.router';
 import { authRoutes } from './modules/Auth/auth.routes';
+
+import globalErrorhandler from './middleware/globalErrorhandles';
 
 app.use(express.json());
 app.use(cors());
@@ -27,27 +29,33 @@ app.use('/api/v1/offeredCourse', OfferedCourseRoutes);
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!');
 });
-// eslint-disable-next-line no-undef, @typescript-eslint/no-explicit-any
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  const statuseCode = err.statusCode || 500;
-  const message = err.message || 'something error wrong';
-  type TerrorSources = {
-    path: string | number;
-    message: string;
-  }[];
-  const errorSource: TerrorSources = [
-    {
-      path: '',
-      message: 'something went wrong',
-    },
-  ];
-  res.status(statuseCode).json({
-    success: false,
-    message,
-    errorSource,
-    error: err,
-  });
-  next();
-});
+
+// app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+//   let statuseCode = err.statusCode || 500;
+//   let message = err.message || 'something error wrong';
+//   type TerrorSources = {
+//     path: string | number;
+//     message: string;
+//   }[];
+//   const errorSource: TerrorSources = [
+//     {
+//       path: '',
+//       message: 'something went wrong',
+//     },
+//   ];
+
+//   if (err instanceof ZodError) {
+//     statuseCode = 400;
+//     message = 'Something went wrong';
+//   }
+//   res.status(statuseCode).json({
+//     success: false,
+//     message,
+//     errorSource,
+//     error: err,
+//   });
+//   next();
+// });
+app.use(globalErrorhandler);
 app.use(notfound);
 export default app;
