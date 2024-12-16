@@ -35,16 +35,17 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     path: string | number;
     message: string;
   }[];
-  const errorSources: TerrorSources = [
+  const errorSource: TerrorSources = [
     {
       path: '',
-      message: 'Something went wrong',
+      message: 'something went wrong',
     },
   ];
   res.status(statuseCode).json({
     success: false,
     message,
-    errorSources,
+    errorSource,
+    error: err,
   });
   next();
 });
