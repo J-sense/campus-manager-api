@@ -12,7 +12,6 @@ import { courseRoutes } from './modules/course/course.routes';
 import { semesterRegistrationRoutes } from './modules/semesterRagistration/semesterRagistration.router';
 import { OfferedCourseRoutes } from './modules/offeredCourse/offeredCourse.router';
 import { authRoutes } from './modules/Auth/auth.routes';
-
 import globalErrorhandler from './middleware/globalErrorhandles';
 
 app.use(express.json());
@@ -56,6 +55,6 @@ app.get('/', (req: Request, res: Response) => {
 //   });
 //   next();
 // });
-app.use(globalErrorhandler);
 app.use(notfound);
+app.use(globalErrorhandler);
 export default app;

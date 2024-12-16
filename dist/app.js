@@ -56,6 +56,6 @@ app.get('/', (req, res) => {
 //   });
 //   next();
 // });
-app.use(globalErrorhandles_1.default);
 app.use(notfound_1.default);
+app.use(globalErrorhandles_1.default);
 exports.default = app;

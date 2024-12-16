@@ -93,6 +93,7 @@ const studentSchema = new Schema<TStudent>(
     name: {
       type: userNameSchema,
       required: [true, 'Name is required'],
+      unique: true,
     },
     gender: {
       type: String,

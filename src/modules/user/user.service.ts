@@ -47,7 +47,6 @@ const createStudentIntoDB = async (password: string, studentData: TStudent) => {
     await session.endSession();
     return newStudent;
   } catch (err) {
-    console.log(err);
     await session.abortTransaction();
     await session.endSession();
   }
