@@ -14,9 +14,12 @@ import { OfferedCourseRoutes } from './modules/offeredCourse/offeredCourse.route
 import { authRoutes } from './modules/Auth/auth.routes';
 import globalErrorhandler from './middleware/globalErrorhandles';
 
+import { userTwoRoutes } from './modules/UserTwo/Usertwo.Routes';
+
 app.use(express.json());
 app.use(cors());
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/usersTwo', userTwoRoutes);
 app.use('/api/v1/students', studentRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/academic-semester', AcademicSemesterRoutes);

@@ -1,3 +1,4 @@
+import { StatusCodes } from 'http-status-codes';
 import config from '../../config';
 import AppError from '../../errors/AppError';
 import { User } from '../user/user.model';
@@ -17,10 +18,14 @@ const createLoginIntoDb = async (payload: TLogin) => {
   if (userStatus === 'blocked') {
     throw new AppError(404, 'This user is blocked');
   }
+
   const isPasswordMatch = bcrypt.compare(
     payload?.password,
     isUserExist.password,
   );
+  if (!isPasswordMatch) {
+    throw new AppError(StatusCodes.NOT_FOUND, 'Password did not matched');
+  }
   const JwtPayload = {
     userId: isUserExist.id,
     role: isUserExist.role,
