@@ -1,27 +1,27 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
-import config from '../config';
+import catchAsync from '../utils/catchAsync';
 import AppError from '../errors/AppError';
+import config from '../config';
 
-const auth = (req: Request, res: Response, next: NextFunction) => {
-  const authorizationHeader = req.headers.authorization;
+const authentication = (...requiredRole: string[]) => {
+  return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const token = req.headers.authorization;
+    if (!token) {
+      throw new AppError(404, 'You are not authorized');
+    }
+    jwt.verify(
+      token,
+      config.jwt_access_secret as string,
+      function (err, decoded) {
+        if (err) {
+          throw new AppError(404, 'You are not authorized');
+        }
 
-  if (!authorizationHeader) {
-    return res.status(401).json({ error: 'Authorization header is missing' });
-  }
-
-  jwt.verify(
-    authorizationHeader,
-    config.jwt_access_secret as string,
-    function (err, decoded) {
-      if (err) {
-        throw new AppError(401, 'You are not authorized');
-      }
-      req.user = decoded as JwtPayload;
-      next();
-    },
-  );
-  next();
+        req.user = decoded as JwtPayload;
+      },
+    );
+    next();
+  });
 };
-
-export default auth;
+export default authentication;

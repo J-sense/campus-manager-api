@@ -38,7 +38,9 @@ const createLoginIntoDb = async (payload: TLogin) => {
     needsPasswordChange: isUserExist.needsPasswordChange,
   };
 };
+const changePassword = async () => {};
 
 export const authService = {
   createLoginIntoDb,
+  changePassword,
 };

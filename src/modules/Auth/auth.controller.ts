@@ -13,6 +13,19 @@ const createLogin = async (req: Request, res: Response, next: NextFunction) => {
     next(error);
   }
 };
+const changePassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  console.log(req.user, req.body);
+  res.status(200).json({
+    message: 'password change successfully',
+    success: true,
+    data: null,
+  });
+};
 export const authController = {
   createLogin,
+  changePassword,
 };
