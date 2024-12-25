@@ -15,4 +15,5 @@ router.post(
   validateMiddleware(AuthValidation.changePasswordValidation),
   authController.changePassword,
 );
+router.post('/forget-password', authController.forgetPassword);
 export const authRoutes = router;
