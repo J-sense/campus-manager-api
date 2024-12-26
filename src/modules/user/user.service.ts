@@ -58,8 +58,12 @@ const createStudentIntoDB = async (password: string, studentData: TStudent) => {
 const getMe = async (token: string) => {
   const decoded = jwt.verify(token, config.jwt_access_secret as string);
   const { userId, role } = decoded as JwtPayload;
-  console.log(decoded.userId, decoded.role);
-  return {};
+
+  let result = null;
+  if (role === 'student') {
+    result = await StudentModel.findOne({ id: userId });
+  }
+  return result;
 };
 export const UserServices = {
   createStudentIntoDB,

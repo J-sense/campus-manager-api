@@ -31,6 +31,11 @@ const getMe = async (req: Request, res: Response, next: NextFunction) => {
       throw new AppError(404, 'Token is not found');
     }
     const result = await UserServices.getMe(token);
+    res.status(200).json({
+      message: 'student created successfully',
+      success: true,
+      data: result,
+    });
   } catch (error) {
     next(error);
   }
