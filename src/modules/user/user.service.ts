@@ -1,3 +1,5 @@
+import jwt, { JwtPayload } from 'jsonwebtoken';
+/* eslint-disable no-unused-vars */
 import mongoose from 'mongoose';
 import config from '../../config';
 import AppError from '../../errors/AppError';
@@ -17,6 +19,7 @@ const createStudentIntoDB = async (password: string, studentData: TStudent) => {
 
   // Set student role
   userData.role = 'student';
+  userData.email = studentData.email;
 
   // Find academic semester info
   const admissionSemester = await academicModel.findById(
@@ -46,11 +49,19 @@ const createStudentIntoDB = async (password: string, studentData: TStudent) => {
     await session.commitTransaction();
     await session.endSession();
     return newStudent;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
     await session.abortTransaction();
     await session.endSession();
   }
 };
+const getMe = async (token: string) => {
+  const decoded = jwt.verify(token, config.jwt_access_secret as string);
+  const { userId, role } = decoded as JwtPayload;
+  console.log(decoded.userId, decoded.role);
+  return {};
+};
 export const UserServices = {
   createStudentIntoDB,
+  getMe,
 };

@@ -3,6 +3,7 @@ import { userController } from './user.controller';
 
 import validateMiddleware from '../../middleware/validateRequest';
 import { createStudentValidationSchema } from '../student/student.validation';
+import authentication from '../../middleware/auth';
 const router = express.Router();
 // const oneManArmy = (schema: AnyZodObject) => {
 //   return async (req: Request, res: Response, next: NextFunction) => {
@@ -21,4 +22,5 @@ router.post(
   validateMiddleware(createStudentValidationSchema),
   userController.createUser,
 );
+router.get('/me', authentication('student'), userController.getMe);
 export const userRoutes = router;

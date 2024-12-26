@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { UserServices } from './user.service';
+import AppError from '../../errors/AppError';
 
 // const catchAsync = (fn: RequestParamHandler) => {
 //   return (req: Request, res: Response, next: NextFunction) => {
@@ -23,6 +24,18 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
     next(error);
   }
 };
+const getMe = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const token = req.headers.authorization;
+    if (!token) {
+      throw new AppError(404, 'Token is not found');
+    }
+    const result = await UserServices.getMe(token);
+  } catch (error) {
+    next(error);
+  }
+};
 export const userController = {
   createUser,
+  getMe,
 };

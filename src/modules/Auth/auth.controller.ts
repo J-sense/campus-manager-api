@@ -48,7 +48,7 @@ const forgetPassword = async (
 ) => {
   try {
     const { id } = req.body;
-    console.log(req.body);
+
     const result = await authService.forgetPassword(id);
     res.status(200).json({
       message: 'forget password changed link create successfully',

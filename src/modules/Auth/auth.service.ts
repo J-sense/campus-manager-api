@@ -5,6 +5,7 @@ import { User } from '../user/user.model';
 import { TLogin } from './auth.interface';
 import bcrypt from 'bcrypt';
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import { sentEmail } from '../../utils/sentEmail';
 const createLoginIntoDb = async (payload: TLogin) => {
   const isUserExist = await User.findOne({ id: payload.id });
   if (!isUserExist) {
@@ -101,7 +102,7 @@ const forgetPassword = async (userId: string) => {
   });
   console.log(accessToken);
   const resetUILink = `http://localhost:5000?id==${isUserExist.id}&token=${accessToken}`;
-  console.log(resetUILink);
+  sentEmail(isUserExist.email, resetUILink);
 };
 
 export const authService = {
